@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_1.xsd"
+ version="2.1">
+	<description>JSP/Servlet Samples</description>
+	<display-name>JSP/Servlet Samples</display-name>
+	<tlib-version>2.1</tlib-version>
+	<short-name>win</short-name>
+	<uri>http://www.wings.msn.to/WingsTagLibs-1.0</uri>
+
+	<!--Tag Configuration-->
+	<tag>
+		<name>contentsLoader</name>
+		<tag-class>to.msn.wings.chap3.ContentsLoaderTag</tag-class>
+		<body-content>empty</body-content>
+		<variable>
+			<name-given>contents</name-given>
+			<variable-class>java.util.ArrayList</variable-class>
+			<declare>true</declare>
+			<scope>AT_END</scope>
+		</variable>
+		<attribute>
+			<name>startPage</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<name>addCookie</name>
+		<tag-class>to.msn.wings.chap3.AddCookieTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>value</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>expire</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<name>sendmail</name>
+		<tag-class>to.msn.wings.chap4.SendMailTag</tag-class>
+		<body-content>tagdependent</body-content>
+		<attribute>
+			<name>smtpServer</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>to</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>fromAddress</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>fromName</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>subject</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<dynamic-attributes>true</dynamic-attributes>
+	</tag>
+	
+	<!--Functions Mapping-->
+	<function>
+		<description>FileList</description>
+		<name>fileList</name>
+		<function-class>to.msn.wings.common.WingsUtil</function-class>
+		<function-signature>
+			 java.io.File[] fileList(javax.servlet.ServletContext, java.lang.String)
+		</function-signature>
+	</function>
+	<function>
+		<description>File</description>
+		<name>file</name>
+		<function-class>to.msn.wings.common.WingsUtil</function-class>
+		<function-signature>
+			 java.io.File file(javax.servlet.ServletContext, java.lang.String)
+		</function-signature>
+	</function>
+	<function>
+		<description>File LastModified</description>
+		<name>lastModified</name>
+		<function-class>to.msn.wings.common.WingsUtil</function-class>
+		<function-signature>
+			 long lastModified(java.io.File)
+		</function-signature>
+	</function>
+	<function>
+		<description>System Property</description>
+		<name>systemProperty</name>
+		<function-class>to.msn.wings.common.WingsUtil</function-class>
+		<function-signature>
+			 java.lang.String systemProperty(java.lang.String)
+		</function-signature>
+	</function>
+	<function>
+		<description>isUserInRole</description>
+		<name>isUserInRole</name>
+		<function-class>to.msn.wings.common.WingsUtil</function-class>
+		<function-signature>
+			boolean isUserInRole(javax.servlet.jsp.PageContext, java.lang.String)
+		</function-signature>
+	</function>
+</taglib>

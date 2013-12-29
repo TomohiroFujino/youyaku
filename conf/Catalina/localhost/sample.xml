@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Context displayName="Jsp_Servlet Samples" 
+	path="/sample" reloadable="true" docBase="C:\Program Files\Apache Software Foundation\Tomcat 7.0\webapps\sample" workDir="C:\Program Files\Apache Software Foundation\Tomcat 7.0\webapps\sample\work"  >
+	<Realm className="org.apache.catalina.realm.DataSourceRealm"
+		dataSourceName="jdbc/Sample" localDataSource="true" debug="99"
+		roleNameCol="role" userCredCol="passwd" userNameCol="uid"
+		userRoleTable="mng_usr_role" userTable="mng_usr"/>
+	<Resource name="jdbc/Sample" auth="Container"
+		type="javax.sql.DataSource" maxActive="100" maxIdle="3" maxWait="10000"
+		driverClassName="org.gjt.mm.mysql.Driver" url="jdbc:mysql://localhost/sample?useUnicode=true&amp;characterEncoding=UTF-8"
+		username="root" password="root"
+		validationQuery="SELECT count(*) FROM books" />
+</Context>

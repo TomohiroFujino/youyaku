@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee/web-app_2_5.xsd"
+	version="2.5">
+	<description>JSP/Servlet Samples</description>
+	<display-name>JSP/Servlet Samples</display-name>
+	<distributable />
+	
+	<!--Application Initial Parameter-->
+	<context-param>
+		<param-name>javax.servlet.jsp.jstl.sql.maxRows</param-name>
+		<param-value>100</param-value>
+	</context-param>
+	<context-param>
+		<param-name>javax.servlet.jsp.jstl.fmt.locale</param-name>
+		<param-value>ja_JP</param-value>
+	</context-param>
+	<context-param>
+		<param-name>javax.servlet.jsp.jstl.fmt.fallbackLocale</param-name>
+		<param-value>ja_JP</param-value>
+	</context-param>
+	<context-param>
+		<param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
+		<param-value>msg</param-value>
+	</context-param>
+
+	<!--Filter Declaration-->
+	<filter>
+		<description>Filter to encode the Request Parameter</description>
+		<display-name>HTTP Request Encoder</display-name>
+		<filter-name>EncodeUtil</filter-name>
+		<filter-class>to.msn.wings.common.EncodeUtil</filter-class>
+		<init-param>
+			<description>Encoding Name</description>
+			<param-name>EncodeName</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+
+
+
+	<!--Filter Mapping-->
+	<filter-mapping>
+		<filter-name>EncodeUtil</filter-name>
+		<url-pattern>/*</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+	</filter-mapping>
+
+
+	<!--Servlet Declaration-->
+	<!--<servlet>
+		<servlet-name>DefaultServlet</servlet-name>
+		<jsp-file>/default.jsp</jsp-file>
+	</servlet>-->
+	<servlet>
+		<servlet-name>CalloutServlet</servlet-name>
+		<servlet-class>to.msn.wings.youyaku.CalloutServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>FrontServlet</servlet-name>
+		<servlet-class>to.msn.wings.common.FrontServlet</servlet-class>
+		<init-param>
+			<param-name>jsp.path</param-name>
+			<param-value>/WEB-INF/jsp/youyaku/</param-value>
+		</init-param>
+		<init-param>
+			<param-name>action.package</param-name>
+			<param-value>to.msn.wings.youyaku.</param-value>
+		</init-param>
+	</servlet>
+
+	<!--Servlet Mapping-->
+	<!--<servlet-mapping>
+		<servlet-name>DefaultServlet</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>-->
+	
+	<servlet-mapping>
+		<servlet-name>CalloutServlet</servlet-name>
+		<url-pattern>/youyaku/CalloutServlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>FrontServlet</servlet-name>
+		<url-pattern>/youyaku/FrontServlet/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>FrontServlet</servlet-name>
+		<url-pattern>/youyaku/BbsFront/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>FrontServlet</servlet-name>
+		<url-pattern>/youyaku/ScheFront/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>FrontServlet</servlet-name>
+		<url-pattern>/youyaku/MngFront/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>FrontServlet</servlet-name>
+		<url-pattern>/youyaku/BmFront/*</url-pattern>
+	</servlet-mapping>
+
+	<!--welcome-file-->
+	<welcome-file-list>
+		<welcome-file>youyaku/BbsFront/BbsIndex</welcome-file>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
+
+	<!--custom error-->
+	<error-page>
+		<exception-type>java.lang.Exception</exception-type>
+		<location>/exception.jsp</location>
+	</error-page>
+	<error-page>
+		<error-code>404</error-code>
+		<location>/exception.jsp</location>
+	</error-page>
+
+	<!--Jsp File Configuration-->
+	<jsp-config>
+		<taglib>
+			<taglib-uri>http://www.wings.msn.to/WingsTagLibs-1.0</taglib-uri>
+			<taglib-location>/WEB-INF/tld/myTag.tld</taglib-location>
+		</taglib>
+		<jsp-property-group>
+			<display-name>JSP Config</display-name>
+			<url-pattern>*.jsp</url-pattern>
+			<el-ignored>false</el-ignored>
+			<page-encoding>UTF-8</page-encoding>
+			<scripting-invalid>false</scripting-invalid>
+			<include-prelude>/WEB-INF/jsp/common.jsp</include-prelude>
+		</jsp-property-group>
+	</jsp-config>
+
+	<!--Authorization Configuration-->
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>User Auth</web-resource-name>
+			<url-pattern>/youyaku/MngFront/*</url-pattern>
+		</web-resource-collection>
+		<web-resource-collection>
+			<web-resource-name>User Auth</web-resource-name>
+			<url-pattern>/youyaku/BmFront/*</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>administrator</role-name>
+			<role-name>supervisor</role-name>
+			<role-name>user</role-name>
+		</auth-constraint>
+	</security-constraint>
+	<login-config>
+		<auth-method>FORM</auth-method>
+		<realm-name>Property Management</realm-name>
+		<form-login-config>
+			<form-login-page>/youyaku/FrontServlet/Login</form-login-page>
+			<form-error-page>/youyaku/FrontServlet/LoginError</form-error-page>
+		</form-login-config>
+	</login-config>
+	<security-role>
+		<role-name>administrator</role-name>
+	</security-role>
+	<security-role>
+		<role-name>supervisor</role-name>
+	</security-role>
+	<security-role>
+		<role-name>user</role-name>
+	</security-role>
+
+	<!--Resource Reference-->
+	<resource-ref>
+		<description>DB Connection</description>
+		<res-ref-name>jdbc/Sample</res-ref-name>
+		<res-type>javax.sql.DataSource</res-type>
+		<res-auth>Container</res-auth>
+	</resource-ref>
+</web-app>
